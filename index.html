@@ -5,6 +5,7 @@
         <!-- JS -->
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+        <script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
@@ -29,6 +30,8 @@
                 </figure>
                 <br>
                 <textarea id="meme_text" rows = "5" cols = "60" placeholder="Add text to image" v-model="meme_text"></textarea>
+                <br>
+                <button @click="save_photo()">Save Meme</button>
             </div>
         </div>
         <script src='script.js'></script>

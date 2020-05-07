@@ -39,6 +39,8 @@ const App = new Vue({
         },
 
         photo_click(photo) {
+            //displays photo and option to add text
+            this.meme_text = "";
             this.selected_photo = photo;
             this.is_selected = true;
         },
@@ -49,6 +51,20 @@ const App = new Vue({
             //reset query
             this.query = "";
             this.photos = null;
+        },
+
+        save_photo(){
+            //saves photo of meme using html2canvas: https://html2canvas.hertzen.com/
+            html2canvas(document.getElementById('meme'), {useCORS: true}).then(function(canvas) {
+                // Export the canvas to its data URI representation
+                var base64image = canvas.toDataURL("image/png");
+                
+                //downloads image as png
+                var link = document.createElement('a');  
+                link.href = base64image; link.download = 'image.png';
+                document.body.appendChild(link);
+                link.click();
+            });
         }
     }
   })
