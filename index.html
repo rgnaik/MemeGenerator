@@ -6,6 +6,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
         <script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
@@ -13,27 +14,52 @@
         <div id="app">
             <div id="title_bar">
                 <span id="home" @click="home_click">Meme Generator</span>
+
+                <!--Search bar for images-->
                 <div id="search_bar">
                     <input type="text" placeholder="Search for images" v-model="query" v-on:keyup.enter="search_call()">
                     <button type="submit" @click="search_call()">Search</button>
                 </div>
             </div>
+
             <!--List of Photos-->
             <div v-if="!is_selected" v-for="photo in photos" id="search_results">
                 <img v-bind:src="get_img_url(photo)" @click="photo_click(photo)">
             </div>
+
             <!--Adding text to photo-->
             <div v-if="is_selected" id="add_text">
+                <!--Figure contains all of the meme-->
                 <figure id="meme">
-                    <figcaption>{{ meme_text }}</figcaption>
-                    <img v-bind:src="get_full_img_url(selected_photo)">
+                    <!--Putting text above image-->
+                    <span id="text_above" v-if="position == 'above'">{{ meme_text }}</span>
+
+                    <!--Putting text on top of image-->
+                    <!--Creates div with image as background, set to right size-->
+                    <div id="text_ontop" v-if="position == 'ontop'" v-bind:style="{width: img_width.toString() + 'px', height: img_height.toString() + 'px', backgroundImage: 'url(' + img_url + ')'}">{{ meme_text }}</div>
+                    
+                    <img v-bind:src="img_url">
+                    
+                    <!--Putting text below image-->
+                    <span id="text_below" v-if="position == 'below'">{{ meme_text }}</span> 
                 </figure>
                 <br>
+                <!--Lets user select position-->
+                Set text position to: 
+                <select id="text_position" v-model="position">
+                    <option value="above">Above</option>
+                    <option value="below">Below</option>
+                    <option value="ontop">On Top</option>
+                </select>
+                <br>
+
+                <!--Textbox to type meme text into-->
                 <textarea id="meme_text" rows = "5" cols = "60" placeholder="Add text to image" v-model="meme_text"></textarea>
                 <br>
-                <button @click="save_photo()">Save Meme</button>
+                <button @click="save_photo()">Download Meme</button>
             </div>
         </div>
+        <!--Vue script-->
         <script src='script.js'></script>
     </body>
 </html>

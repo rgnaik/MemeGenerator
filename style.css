@@ -51,11 +51,26 @@
     margin-right: auto;
 }
 
-#meme figcaption{
+#text_above{
     display: table-caption;
     caption-side: top;
     font-family: Impact;
     font-size: x-large;
+}
+
+#text_below{
+    display: table-caption;
+    caption-side: bottom;
+    font-family: Impact;
+    font-size: x-large;
+}
+
+#text_ontop{
+    position: absolute;
+    font-family: Impact;
+    font-size: x-large;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #meme img{

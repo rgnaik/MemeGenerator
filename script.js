@@ -5,9 +5,12 @@ const App = new Vue({
       query: "",
       response: null, 
       photos: null,
-      selected_photo: null,
       is_selected: false,
       meme_text: "",
+      position: "above",
+      img_height: 0,
+      img_width: 0,
+      img_url: "",
     },
     methods: {
         search_call() {
@@ -21,7 +24,7 @@ const App = new Vue({
                 .then(response => {
                     let str = response.data;
 
-                    //save json part of the response
+                    //save json part of the response (gets rid of unnecessary characters from response)
                     str = str.substr(0, str.length - 1);
                     this.response = JSON.parse(str.substr(14));
                     this.photos = this.response.photos.photo;
@@ -41,8 +44,12 @@ const App = new Vue({
         photo_click(photo) {
             //displays photo and option to add text
             this.meme_text = "";
-            this.selected_photo = photo;
             this.is_selected = true;
+
+            //set img height, width, and url
+            this.img_url = this.get_full_img_url(photo);
+            this.get_selected_height();
+            this.get_selected_width();
         },
 
         home_click() {
@@ -65,6 +72,28 @@ const App = new Vue({
                 document.body.appendChild(link);
                 link.click();
             });
+        }, 
+
+        get_selected_height(){
+            var img = new Image();
+            let self = this;
+
+            img.onload = function(){
+              //gets height after image loads
+              self.img_height = img.height;
+            }
+            img.src = this.img_url;
+        },
+
+        get_selected_width(){
+          var img = new Image();
+          let self = this;
+
+          img.onload = function(){
+            //gets width after image loads
+            self.img_width = img.width;
+          }
+          img.src = this.img_url;
         }
     }
   })
