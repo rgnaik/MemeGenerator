@@ -17,14 +17,25 @@
 
                 <!--Search bar for images-->
                 <div id="search_bar">
-                    <input type="text" placeholder="Search for images" v-model="query" v-on:keyup.enter="search_call()">
-                    <button type="submit" @click="search_call()">Search</button>
+                    <input type="text" placeholder="Search for images" v-model="query" v-on:keyup.enter="search_call(1)">
+                    <button type="submit" @click="search_call(1)">Search</button>
                 </div>
             </div>
 
-            <!--List of Photos-->
-            <div v-if="!is_selected" v-for="photo in photos" id="search_results">
-                <img v-bind:src="get_img_url(photo)" @click="photo_click(photo)">
+            <!--Search result page-->
+            <div v-if="!is_selected" id="search_results_page">
+                <!--List of Photos-->
+                <div v-for="photo in photos" id="search_results">
+                    <img v-bind:src="get_img_url(photo)" @click="photo_click(photo)">
+                </div>
+                <br>
+
+                <!--Page navigation-->
+                <div v-if="current_page != 0 && response.photos.pages != 0" id="pagination">
+                    <button v-if="current_page != 1" @click="search_call(current_page - 1)" id="navigation">Previous</button>
+                    Page {{current_page}} of {{response.photos.pages}}
+                    <button v-if="current_page != response.photos.pages" @click="search_call(current_page + 1)" id="navigation">Next</button>
+                </div>
             </div>
 
             <!--Adding text to photo-->

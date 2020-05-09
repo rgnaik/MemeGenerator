@@ -11,16 +11,17 @@ const App = new Vue({
       img_height: 0,
       img_width: 0,
       img_url: "",
+      current_page: 0,
     },
     methods: {
-        search_call() {
+        search_call(page_num) {
             /*Key: e0019bee21d189d5402906185b8837a1
               Secret: a877828bd6cd0862 */
 
             this.is_selected = false;
             
               axios
-                .get("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=e0019bee21d189d5402906185b8837a1&format=json&per_page=50&text=" + this.query)
+                .get("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=e0019bee21d189d5402906185b8837a1&format=json&page=" + page_num.toString() + "&per_page=100&text=" + this.query)
                 .then(response => {
                     let str = response.data;
 
@@ -28,6 +29,7 @@ const App = new Vue({
                     str = str.substr(0, str.length - 1);
                     this.response = JSON.parse(str.substr(14));
                     this.photos = this.response.photos.photo;
+                    this.current_page = page_num;
                 })
         },
 
@@ -58,6 +60,7 @@ const App = new Vue({
             //reset query
             this.query = "";
             this.photos = null;
+            this.current_page = 0;
         },
 
         save_photo(){
