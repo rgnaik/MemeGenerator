@@ -18,6 +18,16 @@
                 <!--Search bar for images-->
                 <div id="search_bar">
                     <input type="text" placeholder="Search for images" v-model="query" v-on:keyup.enter="search_call(1)">
+                    Sort by:
+                    <select id="sort_option" v-model="sort">
+                        <option value="relevance">Relevance</option>
+                        <option value="date-posted-asc">Date Posted Asc</option>
+                        <option value="date-posted-desc">Date Posted Desc</option>
+                        <option value="date-taken-asc">Date Taken Asc</option>
+                        <option value="date-taken-desc">Date Posted Desc</option>
+                        <option value="interestingness-asc">Interestingness Asc</option>
+                        <option value="interestingness-desc">Interestingness Desc</option>
+                    </select>
                     <button type="submit" @click="search_call(1)">Search</button>
                 </div>
             </div>

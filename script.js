@@ -12,6 +12,7 @@ const App = new Vue({
       img_width: 0,
       img_url: "",
       current_page: 0,
+      sort: "relevance",
     },
     methods: {
         search_call(page_num) {
@@ -21,7 +22,7 @@ const App = new Vue({
             this.is_selected = false;
             
               axios
-                .get("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=e0019bee21d189d5402906185b8837a1&format=json&page=" + page_num.toString() + "&per_page=100&text=" + this.query)
+                .get("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=e0019bee21d189d5402906185b8837a1&format=json&page=" + page_num.toString() + "&per_page=100&text=" + this.query + "&sort=" + this.sort)
                 .then(response => {
                     let str = response.data;
 
@@ -50,8 +51,7 @@ const App = new Vue({
 
             //set img height, width, and url
             this.img_url = this.get_full_img_url(photo);
-            this.get_selected_height();
-            this.get_selected_width();
+            this.get_selected_size();
         },
 
         home_click() {
@@ -61,6 +61,8 @@ const App = new Vue({
             this.query = "";
             this.photos = null;
             this.current_page = 0;
+            this.sort = "relevance";
+            this.position = "above";
         },
 
         save_photo(){
@@ -77,26 +79,16 @@ const App = new Vue({
             });
         }, 
 
-        get_selected_height(){
+        get_selected_size(){
             var img = new Image();
             let self = this;
 
             img.onload = function(){
               //gets height after image loads
               self.img_height = img.height;
+              self.img_width = img.width;
             }
             img.src = this.img_url;
-        },
-
-        get_selected_width(){
-          var img = new Image();
-          let self = this;
-
-          img.onload = function(){
-            //gets width after image loads
-            self.img_width = img.width;
-          }
-          img.src = this.img_url;
         }
     }
   })
