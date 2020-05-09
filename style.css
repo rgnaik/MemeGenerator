@@ -24,6 +24,11 @@
     margin-right: 20px;
 }
 
+#search_results_page span{
+    position: relative;
+    top: 50px;
+}
+
 #search_results{
     position: relative;
     float: left;

@@ -19,6 +19,7 @@
                 <div id="search_bar">
                     <input type="text" placeholder="Search for images" v-model="query" v-on:keyup.enter="search_call(1)">
                     Sort by:
+                    <!--Sort options-->
                     <select id="sort_option" v-model="sort">
                         <option value="relevance">Relevance</option>
                         <option value="date-posted-asc">Date Posted Asc</option>
@@ -34,6 +35,8 @@
 
             <!--Search result page-->
             <div v-if="!is_selected" id="search_results_page">
+                <span v-if="current_page == 0">Use the search bar at the top right to search for images. Select an image that you want to put text on. Add text in the large textbox and change the position of the text if desired. If you want to download the image as a .png file, click the 'Download Meme' button.</span>
+
                 <!--List of Photos-->
                 <div v-for="photo in photos" id="search_results">
                     <img v-bind:src="get_img_url(photo)" @click="photo_click(photo)">
